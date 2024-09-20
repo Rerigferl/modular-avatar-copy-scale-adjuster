@@ -1,0 +1,48 @@
+name: Build Release
+
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - "package.json"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.run_number != 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          ref: ${{ github.ref }}
+          submodules: true
+
+      - name: Packaging
+        id: packager
+        uses: "docker://ghcr.io/rerigferl/vpm-packager:latest"
+        with:
+          args: "-z -u"
+          
+      - name: Make Release
+        if: ${{ steps.packager.outputs.package-version != '0.0.0' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.packager.outputs.package-version }}
+          prerelease: ${{ contains(steps.packager.outputs.package-version, '-') }}
+          files: |
+            ${{steps.packager.outputs.zip-path}}
+            ${{steps.packager.outputs.unitypackage-path}}
+            ${{steps.packager.outputs.manifest-path}}
+            
+      - name: Rebuild repository
+        uses: peter-evans/repository-dispatch@v3
+        env:
+         token: ${{ secrets.PAT }}
+        if: ${{ steps.packager.outputs.package-version != '0.0.0' && env.token != '' }}
+        with:
+          token: ${{ secrets.PAT }}
+          repository: rerigferl/vpm
+          event-type: build-listing

@@ -1,0 +1,8 @@
+{
+  "name": "vpm-package",
+  "version": "0.0.0",
+  "displayName": "",
+  "description": "",
+  "url" : "",
+  "vpmDependencies" : { }
+}

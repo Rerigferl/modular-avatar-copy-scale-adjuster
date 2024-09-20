@@ -1,0 +1,52 @@
+name: "Initialize Package"
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Package Name"
+        required: true
+        default: "vpm-package"
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Get old package name
+        id: packageName
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: "package.json"
+            prop_path: "name"
+      
+      - name: Rename package name
+        uses: microsoft/variable-substitution@v1 
+        with:
+          files: package.json
+        env:
+          name: ${{ github.event.inputs.name }}
+          url : ${{ github.server_url }}/${{ github.repository }}
+
+      - name: Rename assembly definitions
+        run: |
+          sed -i -e "s/${{steps.packageName.outputs.prop}}/${{ github.event.inputs.name }}/" ./Editor/${{steps.packageName.outputs.prop}}.editor.asmdef
+          git mv ./Editor/${{steps.packageName.outputs.prop}}.editor.asmdef ./Editor/${{ github.event.inputs.name }}.editor.asmdef
+          sed -i -e "s/${{steps.packageName.outputs.prop}}/${{ github.event.inputs.name }}/" ./Runtime/${{steps.packageName.outputs.prop}}.runtime.asmdef
+          git mv ./Runtime/${{steps.packageName.outputs.prop}}.runtime.asmdef ./Runtime/${{ github.event.inputs.name }}.runtime.asmdef
+
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add * -A
+          git commit -m "Initialize package"
+          git push origin main
