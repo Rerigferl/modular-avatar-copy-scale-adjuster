@@ -1,12 +1,16 @@
 {
-    "name": "numeira.modular-avatar-sync-scale-adjuster.editor",
-    "references": [ ],
+    "name": "numeira.modular-avatar-copy-scale-adjuster.editor",
+    "rootNamespace": "",
+    "references": [
+        "nadena.dev.modular-avatar.core",
+        "nadena.dev.modular-avatar.core.editor"
+    ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
