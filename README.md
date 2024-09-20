@@ -4,7 +4,7 @@ MA側で正式実装されるまでの繋ぎに使ってください
 
 ## ダウンロード
 - [VCC](https://rerigferl.github.io/vpm/)
-- [UnityPackage](https://github.com/Rerigferl/modular-avatar-copy-scale-adjuster/releases/)
+- [UnityPackage](https://github.com/Rerigferl/modular-avatar-copy-scale-adjuster/releases/latest)
 
 ## 使い方
 
