@@ -14,6 +14,12 @@
     "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "nadena.dev.modular-avatar",
+            "expression": "(1.10.0-rc,2)",
+            "define": "MODULAR_AVATAR_VERSION_1_10"
+        }
+    ],
     "noEngineReferences": false
 }

@@ -59,13 +59,33 @@ namespace Numeira
             if (command.context is not GameObject go)
                 return;
 
-            SetupOutfit.SetupOutfitUI(go);
+            RunSetupOutfit(go);
             var merge = go.GetComponentInChildren<MergeArmature>();
 
             Run(merge);
         }
 
-        #endregion
+        private static void RunSetupOutfit(GameObject gameObject)
+        {
+#if MODULAR_AVATAR_VERSION_1_10
+            SetupOutfit.SetupOutfitUI(gameObject);
+#else
+            try
+            {
+                var command = new MenuCommand(gameObject);
+                typeof(AvatarProcessor).Assembly.GetTypes()
+                    .FirstOrDefault(x => x.Name == "EasySetupOutfit")
+                    ?.GetMethod("SetupOutfit", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                    ?.Invoke(null, new object[] { command });
+            }
+            catch 
+            {
+                Debug.LogError("[Copy Scale Adjuster] Failed to running Setup Outfit");
+            }
+#endif
+        }
+
+#endregion
 
         public static void Run(MergeArmature merge)
         {
