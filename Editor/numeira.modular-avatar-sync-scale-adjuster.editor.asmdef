@@ -1,5 +1,5 @@
 {
-    "name": "vpm-package.editor",
+    "name": "numeira.modular-avatar-sync-scale-adjuster.editor",
     "references": [ ],
     "includePlatforms": [
         "Editor"
