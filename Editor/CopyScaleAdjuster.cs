@@ -36,6 +36,8 @@ namespace Numeira
         [MenuItem(HierarchyContextMenuPath, true, HierarchyContextMenuPriority)]
         public static bool ValidateHierarchyContextMenu()
         {
+            if (Selection.activeGameObject == null)
+                return false;
             return Selection.activeGameObject.GetComponent<MergeArmature>().IsValidMergeArmature();
         }
 
