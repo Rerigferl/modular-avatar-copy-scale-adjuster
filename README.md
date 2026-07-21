@@ -2,6 +2,10 @@
 アバター本体にあるMA Scale Adjusterを衣装側のボーンにコピーするツール  
 MA側で正式実装されるまでの繋ぎに使ってください
 
+### 追記 (2026/07/21)
+MA公式でこの機能が実装されるようです。参考: https://github.com/bdunderscore/modular-avatar/pull/2051  
+このリポジトリは念のため残しておきますが、今後は公式の機能を使っていきましょう💪
+
 ## ダウンロード
 - [VCC](https://rerigferl.github.io/vpm/)
 - [UnityPackage](https://github.com/Rerigferl/modular-avatar-copy-scale-adjuster/releases/latest)
